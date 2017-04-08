@@ -1,0 +1,23 @@
+{
+  "name": "httpclient",
+  "version": "1.0.0",
+  "description": "对axios进行的封装，支持jsonp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Liqihan/httpclient.git"
+  },
+  "keywords": [
+    "axios",
+    "jsonp"
+  ],
+  "author": "grove.liqihan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Liqihan/httpclient/issues"
+  },
+  "homepage": "https://github.com/Liqihan/httpclient#readme"
+}
