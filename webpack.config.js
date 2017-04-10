@@ -34,7 +34,12 @@ module.exports = {
         fs: "empty"
     },
     plugins: [
-        new webpack.IgnorePlugin(/request/),
-        new webpack.IgnorePlugin(/requestretry/)
+        // new webpack.IgnorePlugin(/request/),
+        // new webpack.IgnorePlugin(/requestretry/),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
     ]
 };
