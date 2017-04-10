@@ -76,6 +76,43 @@ function jsonp (options) {
     var script = document.createElement('script');
     script.type = 'text/javascript';
     // TODO
+    var id = 'jsonp_' + guid();
+    var cleanUp = function () {
+        if (script.parentNode) {
+            script.parentNode.removeChild(script);
+        }
+        window[id] = function() {};
+        if (timer) {
+            clearTimeout(timer);
+            timer = null;
+        }
+    }
+    window[id] = function(data) {
+        cleanUp();
+        defer.resolve({
+            statusCode: 200,
+            statusText: HTTPStatus[200],
+            body: data,
+            headers: {},
+            parsedBody: data
+        });
+    }
+    if (_isNumber(options.timeout) && options.timeout  > 0) {
+        timer = setTimeout(function() {
+            cleanUp();
+            defer.reject(new Error("timeout"));
+        }, options.timeout);
+    }
+    var uri = new Uri(_isString(options.baseURL) ? (options.baseURL + options.url) : options.url);
+    if (_isObject(options.params)) {
+        _each(options.params, function(value, key) {
+            uri.addQueryParam(key, value);
+        });
+    }
+    uri.addQueryParam(options.jsonp, id);
+    script.src = uri.toString();
+    target.parentNode.insertBefore(script, target);
+    return defer.promise;
 }
 function guid() {
   function s4() {
